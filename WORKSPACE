@@ -3,9 +3,9 @@ workspace(name = "bad_workspace")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-PROTO_GRPC_RULE_SHA = "507e38c8d95c7efa4f3b1c0595a8e8f139c885cb41a76cab7e20e4e67ae87731"
+PROTO_GRPC_RULE_SHA = "bbe4db93499f5c9414926e46f9e35016999a4e9f6e3522482d3760dc61011070"
 
-PROTO_GRPC_RULE_VERSION = "4.1.1"
+PROTO_GRPC_RULE_VERSION = "4.2.0"
 
 JAVA_RULES_VERSION = "5.1.0"
 
@@ -14,24 +14,6 @@ JAVA_RULES_SHA = "d974a2d6e1a534856d1b60ad6a15e57f3970d8596fbb0bb17b9ee26ca20933
 RULES_JVM_EXTERNAL_TAG = "4.2"
 
 RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
-
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "16e9fca53ed6bd4ff4ad76facc9b7b651a89db1689a2877d6fd7b82aa824e366",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.34.0/rules_go-v0.34.0.zip",
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.34.0/rules_go-v0.34.0.zip",
-    ],
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "501deb3d5695ab658e82f6f6f549ba681ea3ca2a5fb7911154b5aa45596183fa",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.26.0/bazel-gazelle-v0.26.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.26.0/bazel-gazelle-v0.26.0.tar.gz",
-    ],
-)
 
 http_archive(
     name = "rules_proto_grpc",

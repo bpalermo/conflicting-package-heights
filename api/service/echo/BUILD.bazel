@@ -1,6 +1,28 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@io_bazel_rules_go//proto:compiler.bzl", "go_proto_compiler")
+
+go_proto_compiler(
+    name = "go_gen_grpc_gateway",
+    options = [
+        "logtostderr=true",
+        "allow_repeated_fields_in_body=true",
+    ],
+    plugin = "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:protoc-gen-grpc-gateway",
+    suffix = ".pb.gw.go",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime:go_default_library",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//utilities:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
+        "@org_golang_google_grpc//grpclog:go_default_library",
+        "@org_golang_google_grpc//metadata:go_default_library",
+        "@org_golang_google_grpc//status:go_default_library",
+        "@org_golang_google_protobuf//proto:go_default_library",
+    ],
+)
 
 proto_library(
     name = "echo_proto",
@@ -9,12 +31,12 @@ proto_library(
     deps = ["@go_googleapis//google/api:annotations_proto"],
 )
 
-#gazelle:go_grpc_compilers @io_bazel_rules_go//proto:go_grpc,@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway
+#gazelle:go_grpc_compilers @io_bazel_rules_go//proto:go_grpc,:go_gen_grpc_gateway
 go_proto_library(
     name = "echo_go_proto",
     compilers = [
         "@io_bazel_rules_go//proto:go_grpc",
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
+        ":go_gen_grpc_gateway",
     ],
     importpath = "github.com/bpalermo/conflicting-package-heights/api/service/echo",
     proto = ":echo_proto",
